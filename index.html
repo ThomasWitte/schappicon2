@@ -1,0 +1,185 @@
+<html>
+<head>
+<style>
+
+
+.gallery {
+    position: absolute;
+    top:0;
+    left:0;
+    display: grid;
+    grid-template: repeat(5, 20%) / repeat(10, 10%);
+    width: 100%;
+    height: 100%;
+}
+
+#content {
+   background-color: linen;
+   position: relative;
+   width: 100%;
+   padding-top: 50%; 
+}
+
+figure {
+    margin: 5px;
+}
+
+.gallery__img {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border: solid;
+}
+
+.flip-box {
+  background-color: transparent;
+  border: 1px solid #f1f1f1;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+/* This container is needed to position the front and back side */
+.flip-box-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-box-selected {
+  transform: rotateY(180deg);
+}
+
+.img-chosen {
+  /*filter: grayscale(50%);
+  -webkit-filter: grayscale(50%);*/
+  box-sizing: border-box;
+  border: solid red 3px;
+}
+
+/* Position the front and back side */
+.flip-box-front, .flip-box-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+.flip-box-back {
+  transform: rotateY(180deg);
+}
+
+</style>
+</head>
+<body>
+
+<div id="content">
+<div id="gallery" class="gallery"/>
+</div>
+
+<script>
+
+function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+//hier kannst du 50 Bilder angegeben, die zufällig verteilt werden
+let imgs = shuffle([
+    "img/dagobert.jpg",
+    "img/darkwing.jpg",
+    "img/donald.jpg",
+    "img/donald2.jpg",
+    "img/dagobert.jpg",
+    "img/darkwing.jpg",
+    "img/donald.jpg",
+    "img/donald2.jpg",
+    "img/dagobert.jpg",
+    "img/darkwing.jpg",
+    "img/donald.jpg",
+    "img/donald2.jpg",
+    "img/dagobert.jpg",
+    "img/darkwing.jpg",
+    "img/donald.jpg",
+    "img/donald2.jpg",
+    "img/dagobert.jpg",
+    "img/darkwing.jpg",
+    "img/donald.jpg",
+    "img/donald2.jpg",
+    "img/dagobert.jpg",
+    "img/darkwing.jpg",
+    "img/donald.jpg",
+    "img/donald2.jpg",
+    "img/dagobert.jpg",
+    "img/darkwing.jpg",
+    "img/donald.jpg",
+    "img/donald2.jpg",
+    "img/dagobert.jpg",
+    "img/darkwing.jpg",
+    "img/donald.jpg",
+    "img/donald2.jpg",
+    "img/dagobert.jpg",
+    "img/darkwing.jpg",
+    "img/donald.jpg",
+    "img/donald2.jpg",
+    "img/dagobert.jpg",
+    "img/darkwing.jpg",
+    "img/donald.jpg",
+    "img/donald2.jpg",
+    "img/dagobert.jpg",
+    "img/darkwing.jpg",
+    "img/donald.jpg",
+    "img/donald2.jpg",
+    "img/dagobert.jpg",
+    "img/darkwing.jpg",
+    "img/donald.jpg",
+    "img/donald2.jpg",
+    "img/dagobert.jpg",
+    "img/darkwing.jpg"
+]);
+
+// das Bild für die Rückseite
+let img_back = "img/question.png"
+
+var gallery = document.getElementById("gallery");
+
+for (let img_src of imgs) {
+    var fig = document.createElement("figure");
+    let div = document.createElement("div");
+    var img = document.createElement("img");
+    var back = document.createElement("img");
+    
+    img.src = img_src;
+    img.classList.add("flip-box-front");
+    
+    back.src = img_back;
+    back.classList.add("flip-box-back");
+    
+    div.classList.add("flip-box-inner");
+    div.classList.add("flip-box-selected");
+    div.classList.add("gallery-img");
+    
+    fig.classList.add("flip-box");
+    
+    div.onclick = function(evt) {
+      if (div.classList.contains("flip-box-selected")) {
+        div.classList.remove("flip-box-selected");
+      } else {
+        div.classList.add("img-chosen");
+      }
+    }
+    
+    fig.appendChild(div);
+    div.appendChild(img);
+    div.appendChild(back);
+    gallery.appendChild(fig);
+}
+
+</script>
+</body>
+</html>
